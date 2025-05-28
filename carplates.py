@@ -1,6 +1,5 @@
 import os
 from bs4 import BeautifulSoup
-from dotenv import load_dotenv
 from requests import get as get
 from flask import Flask, jsonify
 
@@ -9,8 +8,7 @@ app = Flask(__name__)
 
 @app.route("/<Type>")
 def Latest(Type):
-    load_dotenv()
-    url = os.getenv('URL')
+    url = "https://www.automobile.tn/fr/guide/dernieres-immatriculations.html"
     html = get(url).text
     soup = BeautifulSoup(html, 'html.parser').find("div", class_='cms-prose')
     C1="mx-1 flex justify-around rounded-[7px] border-2 border-white py-3 text-[30px] text-white"
