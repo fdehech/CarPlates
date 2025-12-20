@@ -1,6 +1,7 @@
 # CarPlates
 
-A small **Flask REST API** that returns the latest car plate information using a **Python web scraper (no WebDriver / no Selenium)**.
+A small **Flask REST API** that returns the latest car plate information using a **Python web scraper
+(no WebDriver / no Selenium)**.
 
 ## Features
 - Simple HTTP endpoints
