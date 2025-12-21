@@ -1,11 +1,11 @@
-from typing import Dict, Literal, Optional, Tuple
-from datetime import datetime, timezone
 import re
-
 import httpx
 from bs4 import BeautifulSoup
-from fastapi import FastAPI, HTTPException, Path
 from pydantic import BaseModel, Field
+from datetime import datetime, timezone
+from fastapi import FastAPI, HTTPException, Path
+from typing import Dict, Literal, Optional, Tuple
+from scalar_fastapi import get_scalar_api_reference, Theme, Layout
 
 
 SOURCE_URL = "https://www.automobile.tn/fr/guide/dernieres-immatriculations.html"
@@ -120,7 +120,28 @@ app = FastAPI(
     title="Tunisia Vehicle Plates API",
     description="Clean REST API providing latest Tunisian vehicle registration numbers",
     version="1.1.0",
+    docs_url=None,
+    redoc_url=None,
 )
+
+
+@app.get("/docs", include_in_schema=False)
+async def scalar_html():
+    return get_scalar_api_reference(
+        openapi_url=app.openapi_url,
+        title="API Documentation",
+        layout=Layout.CLASSIC,
+        theme=Theme.DEEP_SPACE,
+        hide_models=True,
+        hide_client_button=False,
+        show_sidebar=True,
+        hide_search=False,
+        hide_dark_mode_toggle=False,
+        with_default_fonts=True,
+        expand_all_model_sections=False,
+        expand_all_responses=False,
+        integration="fastapi"
+    )
 
 
 @app.get("/api/v1/plates", response_model=PlatesResponse, tags=["plates"])
